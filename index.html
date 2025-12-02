@@ -424,105 +424,12 @@
       border: 1px solid rgba(75, 85, 99, 0.8);
     }
 
-    /* Right panel */
-    .tabs {
-      display: flex;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.96);
-      padding: 3px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      margin-bottom: 8px;
-    }
-
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 5px 8px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      border-radius: 999px;
-      color: var(--muted);
-    }
-
-    .tab.active {
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.25), rgba(15, 23, 42, 0.95));
-      color: var(--text);
-      border: 1px solid rgba(56, 189, 248, 0.8);
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
-    }
-
-    .side-body {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .guide-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      align-items: center;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .guide-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .guide-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .guide-box {
-      flex: 1;
-      min-height: 0;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(31, 41, 55, 0.95);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), #020617);
-      padding: 8px;
-      overflow-y: auto;
-      font-size: 0.8rem;
-    }
-
-    .program {
-      border-bottom: 1px solid rgba(31, 41, 55, 0.8);
-      padding: 4px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .program:last-child {
-      border-bottom: none;
-    }
-
-    .program-time {
-      color: var(--accent);
-      font-size: 0.78rem;
-    }
-
-    .program-title {
-      font-weight: 500;
-    }
-
-    .program-desc {
-      color: var(--muted);
-      font-size: 0.74rem;
-    }
-
     .translate-panel {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      flex: 1;
-      min-height: 0;
+      flex: 0 0 auto;
+      margin-top: 10px;
     }
 
     .translate-row {
@@ -610,7 +517,7 @@
   </header>
 
   <div class="main-grid">
-    <!-- LEFT: Player + channels -->
+    <!-- LEFT: Player + controls -->
     <section class="panel">
       <div class="video-wrapper">
         <video id="video" controls playsinline></video>
@@ -648,7 +555,10 @@
           </div>
         </div>
       </div>
+    </section>
 
+    <!-- RIGHT: Channels + Translate -->
+    <section class="panel">
       <div class="channels-container">
         <div class="channels-header">
           <span>Channels <span id="channelCount">(0)</span></span>
@@ -656,71 +566,35 @@
         </div>
         <ul id="channelsList" class="channels-list"></ul>
       </div>
-    </section>
 
-    <!-- RIGHT: Guide + Translate -->
-    <section class="panel">
-      <div class="tabs">
-        <div class="tab active" data-tab="guide">TV guide</div>
-        <div class="tab" data-tab="translate">Translate workspace</div>
-      </div>
-      <div class="side-body">
-        <!-- GUIDE TAB -->
-        <div id="guideTab" class="tab-panel" style="display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;">
-          <div class="guide-header">
-            <div class="guide-meta">
-              <div id="guideChannelTitle">No channel selected</div>
-              <div id="guideChannelMeta" style="font-size:0.78rem;color:var(--muted);">Pick a channel to see schedule (if EPG is available).</div>
-            </div>
-            <div class="guide-actions">
-              <button class="small secondary" id="loadEpgBtn" title="Try to fetch EPG from x-tvg-url in the playlist">
-                Load / refresh EPG
-              </button>
-              <button class="small secondary" id="openEpgBtn" disabled title="Open raw EPG in a new tab">
-                Open EPG XML
-              </button>
-            </div>
-          </div>
-          <div class="guide-box" id="guideBox">
-            <div style="font-size:0.8rem;color:var(--muted);">
-              Once EPG loads you will see the next programs for the selected channel here.
-              If the playlist has no guide or the server blocks the browser, this area will stay empty.
-            </div>
-          </div>
+      <div class="translate-panel">
+        <div class="translate-row">
+          <span class="label">Phrase catcher</span>
+          <small>Pause the TV, write what you heard, then launch Google Translate.</small>
         </div>
-
-        <!-- TRANSLATE TAB -->
-        <div id="translateTab" class="tab-panel" style="display:none;">
-          <div class="translate-panel">
-            <div class="translate-row">
-              <span class="label">Phrase catcher</span>
-              <small>Pause the TV, write what you heard, then launch Google Translate.</small>
-            </div>
-            <div class="translate-area">
-              <textarea id="translateInput" placeholder="Escribe aquí lo que acabas de escuchar…"></textarea>
-            </div>
-            <div class="translate-row">
-              <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
-                <button id="openTranslateBtn">Open in Google Translate</button>
-                <label style="display:flex;align-items:center;gap:4px;font-size:0.75rem;">
-                  <input type="checkbox" id="useAutoDetect" checked />
-                  <span>Auto detect source language</span>
-                </label>
-              </div>
-              <small>Some browsers will block the embedded view. The new tab will still work.</small>
-            </div>
-            <div class="translate-iframe">
-              <iframe id="translateFrame" title="Google Translate preview"></iframe>
-            </div>
+        <div class="translate-area">
+          <textarea id="translateInput" placeholder="Escribe aquí lo que acabas de escuchar…"></textarea>
+        </div>
+        <div class="translate-row">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+            <button id="openTranslateBtn">Open in Google Translate</button>
+            <label style="display:flex;align-items:center;gap:4px;font-size:0.75rem;">
+              <input type="checkbox" id="useAutoDetect" checked />
+              <span>Auto detect source language</span>
+            </label>
           </div>
+          <small>Some browsers will block the embedded view. The new tab will still work.</small>
+        </div>
+        <div class="translate-iframe">
+          <iframe id="translateFrame" title="Google Translate preview"></iframe>
         </div>
       </div>
     </section>
   </div>
 
   <footer>
-    <span>Tip: to focus on one country, switch preset then filter channels by topic, for example “Noticias” or “Deportes”.</span>
-    <span>Legal note: iptv-org playlists are community curated public streams. They intend to avoid copyrighted pay channels. :contentReference[oaicite:3]{index=3}</span>
+    <span>Tip: switch preset for a country, then filter channels by topic like “Noticias” or “Deportes”.</span>
+    <span>Legal note: iptv-org playlists are community curated public streams.</span>
   </footer>
 </div>
 
@@ -734,17 +608,7 @@
   const playlistUrlInput = document.getElementById("playlistUrl");
   const loadPlaylistBtn = document.getElementById("loadPlaylistBtn");
   const presetButtonsContainer = document.getElementById("presetButtons");
-
-  const guideTabBtn = document.querySelector('.tab[data-tab="guide"]');
-  const translateTabBtn = document.querySelector('.tab[data-tab="translate"]');
-  const guideTab = document.getElementById("guideTab");
-  const translateTab = document.getElementById("translateTab");
-  const guideBox = document.getElementById("guideBox");
-  const guideChannelTitle = document.getElementById("guideChannelTitle");
-  const guideChannelMeta = document.getElementById("guideChannelMeta");
   const currentChannelSummary = document.getElementById("currentChannelSummary");
-  const loadEpgBtn = document.getElementById("loadEpgBtn");
-  const openEpgBtn = document.getElementById("openEpgBtn");
 
   const translateInput = document.getElementById("translateInput");
   const openTranslateBtn = document.getElementById("openTranslateBtn");
@@ -755,8 +619,6 @@
   let allChannels = [];
   let filteredChannels = [];
   let currentChannel = null;
-  let epgUrl = null;
-  let epgDoc = null;
 
   function setStatus(text, isError = false) {
     statusText.textContent = text;
@@ -776,20 +638,7 @@
   function parseM3U(content) {
     const lines = content.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
     if (lines.length === 0) {
-      return { epgUrl: null, channels: [] };
-    }
-
-    let headerLine = lines[0];
-    let headerEpgUrl = null;
-
-    const headerMatch = headerLine.match(/x-tvg-url="([^"]+)"/i);
-    if (headerMatch) {
-      headerEpgUrl = headerMatch[1];
-    } else {
-      const altMatch = headerLine.match(/url-tvg="([^"]+)"/i);
-      if (altMatch) {
-        headerEpgUrl = altMatch[1];
-      }
+      return { channels: [] };
     }
 
     const channels = [];
@@ -826,10 +675,7 @@
       }
     }
 
-    return {
-      epgUrl: headerEpgUrl,
-      channels
-    };
+    return { channels };
   }
 
   function renderChannels() {
@@ -896,7 +742,6 @@
         currentChannel = ch;
         renderChannels();
         playChannel(ch);
-        updateGuideChannelInfo(ch);
       });
 
       channelsList.appendChild(li);
@@ -962,9 +807,6 @@
 
   async function loadPlaylist(url) {
     setStatus("Fetching playlist…");
-    epgDoc = null;
-    epgUrl = null;
-    openEpgBtn.disabled = true;
 
     try {
       const res = await fetch(url);
@@ -972,7 +814,7 @@
         throw new Error("HTTP " + res.status);
       }
       const text = await res.text();
-      const { epgUrl: foundEpgUrl, channels } = parseM3U(text);
+      const { channels } = parseM3U(text);
 
       allChannels = channels;
       applyChannelFilter();
@@ -981,191 +823,15 @@
         currentChannel = channels[0];
         renderChannels();
         playChannel(currentChannel);
-        updateGuideChannelInfo(currentChannel);
         setStatus("Playlist loaded. " + channels.length + " channels.");
       } else {
         setStatus("Playlist loaded but no channels found.", true);
-      }
-
-      epgUrl = foundEpgUrl;
-      if (epgUrl) {
-        openEpgBtn.disabled = false;
       }
     } catch (err) {
       console.error(err);
       setStatus("Error loading playlist: " + err.message, true);
     }
   }
-
-  function updateGuideChannelInfo(channel) {
-    if (!channel) {
-      guideChannelTitle.textContent = "No channel selected";
-      guideChannelMeta.textContent = "Pick a channel to see schedule (if EPG is available).";
-      guideBox.innerHTML = '<div style="font-size:0.8rem;color:var(--muted);">No channel selected.</div>';
-      return;
-    }
-
-    guideChannelTitle.textContent = channel.name;
-    let metaPieces = [];
-    if (channel.groupTitle) metaPieces.push(channel.groupTitle);
-    if (channel.country) metaPieces.push("Country: " + channel.country);
-    if (channel.tvgId) metaPieces.push("tvg-id: " + channel.tvgId);
-    if (metaPieces.length === 0) metaPieces.push("No metadata in playlist.");
-    guideChannelMeta.textContent = metaPieces.join(" · ");
-
-    if (!epgDoc) {
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">EPG not loaded yet. Click “Load / refresh EPG” to try to fetch the guide defined in the playlist.</div>';
-    } else {
-      renderScheduleForChannel(channel);
-    }
-  }
-
-  function parseXmltvDate(str) {
-    if (!str || str.length < 14) return null;
-    const year = parseInt(str.slice(0, 4), 10);
-    const month = parseInt(str.slice(4, 6), 10) - 1;
-    const day = parseInt(str.slice(6, 8), 10);
-    const hour = parseInt(str.slice(8, 10), 10);
-    const minute = parseInt(str.slice(10, 12), 10);
-    const second = parseInt(str.slice(12, 14), 10);
-    if (Number.isNaN(year) || Number.isNaN(month)) return null;
-    return new Date(Date.UTC(year, month, day, hour, minute, second));
-  }
-
-  function renderScheduleForChannel(channel) {
-    if (!epgDoc || !channel) {
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">No EPG loaded.</div>';
-      return;
-    }
-
-    const channelId = channel.tvgId || channel.tvgName || channel.name;
-    if (!channelId) {
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">Channel has no tvg-id to match against the EPG.</div>';
-      return;
-    }
-
-    const programmes = Array.from(
-      epgDoc.querySelectorAll('programme[channel="' + channelId.replace(/"/g, "") + '"]')
-    );
-
-    if (programmes.length === 0) {
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">No schedule found for this channel in the current EPG.</div>';
-      return;
-    }
-
-    programmes.sort((a, b) => {
-      const sa = a.getAttribute("start") || "";
-      const sb = b.getAttribute("start") || "";
-      return sa.localeCompare(sb);
-    });
-
-    const now = new Date();
-    const slice = programmes.slice(0, 40);
-
-    guideBox.innerHTML = "";
-    slice.forEach(node => {
-      const startStr = node.getAttribute("start") || "";
-      const endStr = node.getAttribute("stop") || "";
-      const start = parseXmltvDate(startStr);
-      const end = parseXmltvDate(endStr);
-
-      const titleNode = node.querySelector("title");
-      const descNode = node.querySelector("desc");
-
-      const title = titleNode ? titleNode.textContent.trim() : "(no title)";
-      const desc = descNode ? descNode.textContent.trim() : "";
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "program";
-
-      const time = document.createElement("div");
-      time.className = "program-time";
-
-      let timeLabel = "";
-      if (start) {
-        timeLabel += start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-      }
-      if (end) {
-        timeLabel += " – " + end.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-      }
-
-      if (start && end && start <= now && now <= end) {
-        timeLabel += "  (on now)";
-      }
-
-      time.textContent = timeLabel || "(time unknown)";
-
-      const titleEl = document.createElement("div");
-      titleEl.className = "program-title";
-      titleEl.textContent = title;
-
-      const descEl = document.createElement("div");
-      descEl.className = "program-desc";
-      descEl.textContent = desc || "No description.";
-
-      wrapper.appendChild(time);
-      wrapper.appendChild(titleEl);
-      wrapper.appendChild(descEl);
-
-      guideBox.appendChild(wrapper);
-    });
-  }
-
-  async function loadEpg() {
-    if (!epgUrl) {
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">This playlist does not expose an EPG link in its header (x-tvg-url).</div>';
-      return;
-    }
-
-    guideBox.innerHTML =
-      '<div style="font-size:0.8rem;color:var(--muted);">Loading EPG… this can be a large XML file, so give it a moment.</div>';
-
-    try {
-      const res = await fetch(epgUrl);
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const xmlText = await res.text();
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(xmlText, "text/xml");
-      if (doc.querySelector("parsererror")) {
-        throw new Error("Could not parse EPG XML.");
-      }
-
-      epgDoc = doc;
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--muted);">EPG loaded. Select a channel or stay on the current one to see the next programs.</div>';
-
-      if (currentChannel) {
-        renderScheduleForChannel(currentChannel);
-      }
-    } catch (err) {
-      console.error(err);
-      guideBox.innerHTML =
-        '<div style="font-size:0.8rem;color:var(--danger);">Error loading EPG: ' +
-        err.message +
-        '</div>';
-    }
-  }
-
-  // Tabs
-  guideTabBtn.addEventListener("click", () => {
-    guideTabBtn.classList.add("active");
-    translateTabBtn.classList.remove("active");
-    guideTab.style.display = "flex";
-    translateTab.style.display = "none";
-  });
-
-  translateTabBtn.addEventListener("click", () => {
-    translateTabBtn.classList.add("active");
-    guideTabBtn.classList.remove("active");
-    guideTab.style.display = "none";
-    translateTab.style.display = "block";
-  });
 
   // Playlist controls
   loadPlaylistBtn.addEventListener("click", () => {
@@ -1187,17 +853,6 @@
 
   channelSearch.addEventListener("input", () => {
     applyChannelFilter();
-  });
-
-  // EPG buttons
-  loadEpgBtn.addEventListener("click", () => {
-    loadEpg();
-  });
-
-  openEpgBtn.addEventListener("click", () => {
-    if (epgUrl) {
-      window.open(epgUrl, "_blank");
-    }
   });
 
   // Translate workspace
